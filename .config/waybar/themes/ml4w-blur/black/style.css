@@ -1,0 +1,40 @@
+/* -----------------------------------------------------
+ * Import Pywal colors
+ * ----------------------------------------------------- */
+ @import '../../../../../.config/waybar/colors.css';
+
+ @define-color backgroundlight #000000;
+ @define-color backgrounddark #000000;
+ @define-color workspacesbackground1 #000000;
+ @define-color workspacesbackground2 @on_secondary;
+ @define-color bordercolor #000000;
+ @define-color textcolor1 @on_surface;
+ @define-color textcolor2 @on_surface;
+ @define-color textcolor3 #000000;
+ @define-color iconcolor #000000;
+
+@import '../style.css';
+
+window#waybar {
+    background-color: rgba(255,255,255,0.1);
+}
+
+#custom-ml4w-welcome {
+    background-image: url("../../assets/ml4w-icon-black.svg");
+}
+
+#custom-apps {
+    background-image: url("../../assets/arch-linux.svg");
+}
+
+#custom-chrome {
+    background-image: url("../../assets/chrome.svg");
+}
+
+#custom-spotify {
+    background-image: url("../../assets/spotify.svg");
+}
+
+#custom-vscode {
+    background-image: url("../../assets/vscode.svg");
+}
