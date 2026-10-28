@@ -1,0 +1,44 @@
+{
+    "position": "bottom",
+    "layer": "top",
+    "margin-top": 0,
+    "margin-bottom": 0,
+    "margin-left": 0,
+    "margin-right": 0,
+    "spacing": 0,
+
+    "include": [
+        "~/.config/waybar/quicklinks.json",
+        "~/.config/waybar/modules.json"
+    ],
+
+    "modules-left": [
+        "custom/apps",
+        "custom/chrome",
+        "custom/spotify",
+        "custom/vscode",
+        "group/links",
+        "group/quicklinks",
+        "hyprland/window",
+        "custom/empty"
+    ],
+
+    "modules-center": [
+        "hyprland/workspaces"
+    ],
+
+    "modules-right": [
+        "custom/updates",
+        "pulseaudio",
+        "bluetooth",
+        "network",
+        "battery",
+        "power-profiles-daemon",
+        "group/hardware",
+        "group/tools",
+        "tray",
+        "custom/notification",
+        "custom/exit",
+        "clock"
+    ]
+}

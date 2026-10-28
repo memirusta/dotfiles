@@ -1,0 +1,27 @@
+{
+    "custom/quicklink_browser": {
+        "format": "",
+        "on-click": "brave",
+        "tooltip-format": "Brave"
+    },
+    "custom/quicklink_email": {
+        "format": "",
+        "on-click": "evolution",
+        "tooltip-format": "Email"
+    },
+    "custom/quicklink_filemanager": {
+        "format": "",
+        "on-click": "dolphin",
+        "tooltip-format": "Dolphin"
+    },
+    "custom/quicklinkempty": {},
+    "group/quicklinks": {
+        "orientation": "horizontal",
+        "modules": [
+            "custom/quicklink_browser",
+            "custom/quicklink_email",
+            "custom/quicklink_filemanager",
+            "custom/quicklinkempty"
+        ]
+    }
+}

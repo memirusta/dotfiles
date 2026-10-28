@@ -1,0 +1,50 @@
+[global]
+    monitor = 0
+    follow = keyboard
+    origin = top-right
+    offset = 10x50
+    width = 350
+    height = (0, 300)
+    transparency = 10
+    frame_width = 2
+    frame_color = "#33ccff"
+    corner_radius = 10
+    font = Fira Sans 11
+    markup = full
+    format = "<b>%s</b>\n%b"
+    sort = yes
+    idle_threshold = 120
+    history_length = 20
+    line_height = 3
+    separator_height = 2
+    padding = 12
+    horizontal_padding = 12
+    separator_color = frame
+    progress_bar = true
+    progress_bar_height = 10
+    progress_bar_corner_radius = 4
+    icon_position = left
+    min_icon_size = 32
+    max_icon_size = 64
+    sticky_history = yes
+    dmenu = /usr/bin/rofi -dmenu -p dunst:
+    browser = /usr/bin/brave -new-tab
+    mouse_left_click = close_current
+    mouse_middle_click = do_action, close_current
+    mouse_right_click = close_all
+
+[urgency_low]
+    background = "#1e1e2e"
+    foreground = "#cdd6f4"
+    timeout = 5
+
+[urgency_normal]
+    background = "#1e1e2e"
+    foreground = "#cdd6f4"
+    timeout = 8
+
+[urgency_critical]
+    background = "#f38ba8"
+    foreground = "#1e1e2e"
+    frame_color = "#f38ba8"
+    timeout = 0

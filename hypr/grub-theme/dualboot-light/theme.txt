@@ -1,0 +1,27 @@
+# Dual-boot — siyah arka plan, beyaz logolar alt alta, hover ile secim
+desktop-color: "#000000"
+title-text: ""
+terminal-font: "terminus-16.pf2"
+terminal-box: "terminal_box_*.png"
+terminal-left: "6%"
+terminal-top: "75%"
+terminal-width: "88%"
+terminal-height: "20%"
+terminal-border: "0"
+
++ boot_menu {
+    left = 44%
+    top = 32%
+    width = 12%
+    height = 45%
+    item_font = "terminus-16.pf2"
+    item_color = "#000000"
+    selected_item_color = "#000000"
+    icon_width = 112
+    icon_height = 112
+    item_icon_space = 0
+    item_height = 130
+    item_padding = 6
+    item_spacing = 48
+    selected_item_pixmap_style = "select_*.png"
+}

@@ -1,0 +1,14 @@
+#!/bin/bash
+# Portal — systemd servisini kullan, çift başlatmayı önle
+
+dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=Hyprland
+
+systemctl --user reset-failed xdg-desktop-portal-hyprland.service 2>/dev/null || true
+
+if ! pgrep -f xdg-desktop-portal-hyprland >/dev/null; then
+    systemctl --user start xdg-desktop-portal-hyprland.service 2>/dev/null || true
+fi
+if ! pgrep -f '/usr/lib/xdg-desktop-portal$' >/dev/null; then
+    systemctl --user start xdg-desktop-portal.service 2>/dev/null || true
+fi
+

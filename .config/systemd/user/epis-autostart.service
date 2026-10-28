@@ -1,0 +1,12 @@
+[Unit]
+Description=EPIS Hyprland autostart (waybar, wallpaper)
+After=wayland-wm@hyprland.desktop.service
+BindsTo=wayland-wm@hyprland.desktop.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=%h/.config/hypr/scripts/autostart.sh
+
+[Install]
+WantedBy=graphical-session.target

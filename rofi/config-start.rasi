@@ -1,0 +1,105 @@
+/* Windows 11 başlat menüsü — drun grid launcher */
+
+configuration {
+    modi:               "drun,run";
+    font:               "Fira Sans 11";
+    show-icons:         true;
+    icon-theme:         "kora";
+    drun-display-format: "{name}";
+    hover-select:       true;
+    me-select-entry:    "MouseSecondary";
+    me-accept-entry:    "MousePrimary";
+    display-drun:       "";
+    display-run:        "";
+}
+
+@import "~/.config/rofi/colors.rasi"
+
+* {
+    bg:       @surface;
+    bg2:      @surface-container-high;
+    fg:       @on-surface;
+    accent:   @primary;
+    accent-fg: @on-primary;
+    border:   @outline-variant;
+}
+
+window {
+    location:         south;
+    anchor:           center;
+    width:            42%;
+    height:           52%;
+    y-offset:         -2%;
+    transparency:     "real";
+    border:           1px;
+    border-color:     @border;
+    border-radius:    12px;
+    background-color: @bg;
+}
+
+mainbox {
+    children:         [ inputbar, listview ];
+    background-color: transparent;
+}
+
+inputbar {
+    children:         [ prompt, entry ];
+    padding:          24px 28px 16px 28px;
+    spacing:          12px;
+    background-color: transparent;
+}
+
+prompt {
+    text-color:       @fg;
+    font:             "Fira Sans Semibold 14";
+}
+
+entry {
+    placeholder:      "Search for apps, settings, and documents";
+    placeholder-color: @on-surface-variant;
+    padding:          12px 16px;
+    border-radius:    8px;
+    background-color: @bg2;
+    text-color:       @fg;
+}
+
+listview {
+    columns:          6;
+    lines:            4;
+    spacing:          8px;
+    padding:          8px 24px 24px 24px;
+    fixed-height:     true;
+    fixed-columns:    true;
+    cycle:            true;
+    background-color: transparent;
+}
+
+element {
+    padding:          8px 4px;
+    border-radius:    8px;
+    orientation:      vertical;
+}
+
+element selected.normal {
+    background-color: @bg2;
+}
+
+element-icon {
+    size:             2.8em;
+    margin:           0 0 4px 0;
+}
+
+element-text {
+    horizontal-align: 0.5;
+    vertical-align:   0.5;
+    text-color:       @fg;
+}
+
+message {
+    background-color: @bg;
+    text-color:       @fg;
+}
+
+textbox {
+    text-color: @fg;
+}

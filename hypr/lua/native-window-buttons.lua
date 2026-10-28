@@ -1,0 +1,49 @@
+-- Translate native application titlebar buttons into our
+-- Windows-like floating window behaviour.
+
+local function uses_native_titlebar(w)
+    if not w or not w.class then
+        return false
+    end
+
+    local class = string.lower(w.class)
+
+    return
+        string.find(class, "cosmic") ~= nil or
+        string.find(class, "google%-chrome") ~= nil or
+        class == "steam" or
+        class == "code" or
+        class == "code%-oss"
+end
+
+
+-- Native minimize button:
+-- send the window to our hidden minimized workspace.
+
+
+
+-- Native maximize button:
+-- applications request Hyprland's native maximized state first.
+-- Immediately cancel that state and use our floating fake-maximize instead.
+hl.on("window.fullscreen", function(w)
+    if not uses_native_titlebar(w) then
+        return
+    end
+
+    -- 1 = maximized
+    -- 2 = real fullscreen, which we intentionally leave untouched.
+    if w.fullscreen ~= 1 then
+        return
+    end
+
+    -- Cancel Hyprland's native maximize.
+    hl.dispatch(hl.dsp.window.fullscreen_state({
+        internal = 0,
+        client = 0,
+        action = "set",
+        window = w,
+    }))
+
+    -- Apply/toggle our Windows-style floating maximize (aero_snap plugin).
+    require("lua/windows").toggle_maximize()
+end)

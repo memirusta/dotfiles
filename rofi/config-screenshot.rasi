@@ -1,0 +1,33 @@
+/* Screenshot menüleri — orta, blur arka plan */
+
+@import "shared.rasi"
+
+window {
+    width:            25em;
+    x-offset:         0em;
+    y-offset:         0em;
+    spacing:          0em;
+    padding:          0em;
+    margin:           0em;
+    color:            #FFFFFF;
+    border:           @border-width;
+    border-color:     @color11;
+    cursor:           "default";
+    transparency:     "real";
+    location:         center;
+    anchor:           center;
+    fullscreen:       false;
+    enabled:          true;
+    border-radius:    @border-radius;
+    background-color: transparent;
+}
+
+mainbox {
+    enabled:          true;
+    spacing:          0em;
+    padding:          0em;
+    orientation:      horizontal;
+    children:         [ "listbox" ];
+    background-color: transparent;
+    background-image: url("~/.config/hypr/cache/blurred_wallpaper.png", width);
+}

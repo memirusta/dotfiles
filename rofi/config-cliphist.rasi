@@ -1,0 +1,33 @@
+/* Clipboard geçmişi — sağ üst */
+
+@import "shared.rasi"
+
+window {
+    width:            30em;
+    x-offset:         -2em;
+    y-offset:         2em;
+    spacing:          0px;
+    padding:          0px;
+    margin:           0px;
+    color:            #FFFFFF;
+    border:           @border-width;
+    border-color:     @color11;
+    cursor:           "default";
+    transparency:     "real";
+    location:         northeast;
+    anchor:           northeast;
+    fullscreen:       false;
+    enabled:          true;
+    border-radius:    @border-radius;
+    background-color: transparent;
+}
+
+mainbox {
+    enabled:          true;
+    spacing:          0em;
+    padding:          0em;
+    orientation:      horizontal;
+    children:         [ "listbox" ];
+    background-color: transparent;
+    background-image: @current-image;
+}

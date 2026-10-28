@@ -1,0 +1,16 @@
+# Pacman hook — linux / nvidia-open / grub güncellenince otomatik imzala
+# Kurulum: sudo ~/.config/hypr/scripts/secure-boot-setup.sh install-hook
+
+[Trigger]
+Operation=Install
+Operation=Upgrade
+Type=Package
+Target=linux
+Target=nvidia-open
+Target=grub
+
+[Action]
+Description=Secure Boot: kernel, GRUB ve NVIDIA modüllerini imzala...
+When=PostTransaction
+NeedsTargets
+Exec=/home/memir/.config/hypr/scripts/secure-boot-setup.sh sign-all

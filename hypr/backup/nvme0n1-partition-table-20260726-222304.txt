@@ -1,0 +1,14 @@
+label: gpt
+label-id: A9E5157B-DEA3-4A05-9EEE-19204882F3CF
+device: /dev/nvme0n1
+unit: sectors
+first-lba: 34
+last-lba: 2000409230
+sector-size: 512
+
+/dev/nvme0n1p1 : start=        2048, size=      409600, type=C12A7328-F81F-11D2-BA4B-00A0C93EC93B, uuid=A45C5E5D-BA9F-42A0-AF64-F8814056EB63, name="Basic data partition", attrs="GUID:63"
+/dev/nvme0n1p2 : start=      411648, size=       32768, type=E3C9E316-0B5C-4DB8-817D-F92DF00215AE, uuid=3DF93732-69E7-4AF3-89C5-1B08494F0F66, name="Microsoft reserved partition", attrs="GUID:63"
+/dev/nvme0n1p3 : start=      444416, size=   419430400, type=4F68BCE3-E8CD-4DB1-96E7-FBCAF984B709, uuid=89377598-5E89-4A03-B2F2-48C616ABBB4E
+/dev/nvme0n1p4 : start=   419874816, size=   722036736, type=EBD0A0A2-B9E5-4433-87C0-68B6B72699C7, uuid=1BBE6A97-60F1-43C6-8EA0-8419A5088DE7, name="Basic data partition"
+/dev/nvme0n1p5 : start=  1141911552, size=     1671168, type=DE94BBA4-06D1-4D40-A16A-BFD50179D6AC, uuid=BA4A0F6C-EE64-4AD1-85B3-777FD1A84B30, attrs="RequiredPartition GUID:63"
+/dev/nvme0n1p6 : start=  1143584768, size=   856821760, type=EBD0A0A2-B9E5-4433-87C0-68B6B72699C7, uuid=147C1072-3064-4C06-B226-C43465BED4C5, name="Basic data partition"

@@ -1,0 +1,19 @@
+-- Emir's Hyprland 0.56+ Lua configuration
+-- Migrated from ~/.config/hypr/hyprland.conf on 2026-08-04.
+-- Hyprlock / Hypridle / Hyprpaper intentionally keep their own .conf files.
+
+-- Emergency bindings live in the main file so a broken module cannot lock you out.
+hl.bind("SUPER + ALT + RETURN", hl.dsp.exec_cmd("kitty"))
+hl.bind("SUPER + ALT + Q", hl.dsp.window.close())
+hl.bind("SUPER + ALT + R", hl.dsp.exec_cmd("hyprctl reload"))
+
+require("lua/monitors")
+require("lua/environment")
+require("lua/appearance")
+require("lua/hyprbars")
+require("lua/aero-snap")
+require("lua/input")
+require("lua/windowrules")
+require("lua/native-window-buttons")
+require("lua/keybindings")
+require("lua/autostart")

@@ -1,0 +1,261 @@
+{
+  "hyprland/workspaces": {
+    "on-scroll-up": "hyprctl dispatch workspace r-1",
+    "on-scroll-down": "hyprctl dispatch workspace r+1",
+    "on-click": "activate",
+    "active-only": false,
+    "all-outputs": true,
+    "format": "{}",
+    "format-icons": {
+      "urgent": "",
+      "active": "",
+      "default": ""
+    },
+    "persistent-workspaces": {
+      "*": 4
+    }
+  },
+
+  "hyprland/window": {
+    "max-length": 60,
+    "rewrite": {
+      "(.*) - Brave": "$1",
+      "(.*) - Chromium": "$1",
+      "(.*) - Brave Search": "$1",
+      "(.*) - Outlook": "$1",
+      "(.*) Microsoft Teams": "$1"
+    },
+    "separate-outputs": true
+  },
+
+  "custom/empty": {
+    "format": ""
+  },
+
+  "custom/tools": {
+    "format": "",
+    "tooltip-format": "Tools"
+  },
+
+  "custom/cliphist": {
+    "format": "",
+    "on-click": "sleep 0.1 && ~/.config/hypr/scripts/cliphist.sh",
+    "on-click-right": "sleep 0.1 && ~/.config/hypr/scripts/cliphist.sh d",
+    "on-click-middle": "sleep 0.1 && ~/.config/hypr/scripts/cliphist.sh w",
+    "tooltip-format": "Clipboard"
+  },
+
+  "custom/updates": {
+    "format": "  {}",
+    "escape": true,
+    "return-type": "json",
+    "exec": "~/.config/waybar/scripts/updates.sh",
+    "interval": 1800,
+    "on-click": "~/.config/waybar/scripts/install-updates.sh",
+    "on-click-right": "kitty -e yay"
+  },
+
+  "custom/chatgpt": {
+    "format": " ",
+    "on-click": "brave --new-window https://chat.openai.com",
+    "tooltip-format": "ChatGPT"
+  },
+
+  "custom/apps": {
+    "format": " ",
+    "on-click": "~/.config/hypr/scripts/launcher.sh",
+    "on-click-right": "~/.config/hypr/scripts/wlogout.sh",
+    "tooltip-format": "Start"
+  },
+
+  "custom/chrome": {
+    "format": " ",
+    "on-click": "brave",
+    "tooltip-format": "Brave"
+  },
+
+  "custom/spotify": {
+    "format": " ",
+    "on-click": "spotify",
+    "tooltip-format": "Spotify"
+  },
+
+  "custom/vscode": {
+    "format": " ",
+    "on-click": "code",
+    "tooltip-format": "Visual Studio Code"
+  },
+
+  "custom/exit": {
+    "format": "",
+    "on-click": "~/.config/hypr/scripts/wlogout.sh",
+    "on-click-right": "hyprlock",
+    "tooltip-format": "Power menu / Lock"
+  },
+
+  "custom/notification": {
+    "tooltip-format": "Notifications / DND",
+    "format": "{icon}",
+    "format-icons": {
+      "notification": "<span rise='8pt'><span foreground='red'><sup></sup></span></span>",
+      "none": "",
+      "dnd-notification": "<span rise='8pt'><span foreground='red'><sup></sup></span></span>",
+      "dnd-none": "",
+      "inhibited-notification": "<span rise='8pt'><span foreground='red'><sup></sup></span></span>",
+      "inhibited-none": "",
+      "dnd-inhibited-notification": "<span rise='8pt'><span foreground='red'><sup></sup></span></span>",
+      "dnd-inhibited-none": ""
+    },
+    "return-type": "json",
+    "exec-if": "which swaync-client",
+    "exec": "swaync-client -swb",
+    "on-click": "swaync-client -t -sw",
+    "on-click-right": "swaync-client -d -sw",
+    "escape": true
+  },
+
+  "custom/hyprshade": {
+    "format": "",
+    "tooltip-format": "Screen shader",
+    "on-click": "sleep 0.5; ~/.config/hypr/scripts/hyprshade.sh",
+    "on-click-right": "sleep 0.5; ~/.config/hypr/scripts/hyprshade.sh rofi"
+  },
+
+  "custom/hypridle": {
+    "format": "",
+    "return-type": "json",
+    "escape": true,
+    "exec-on-event": true,
+    "interval": 60,
+    "exec": "~/.config/hypr/scripts/hypridle.sh status",
+    "on-click": "~/.config/hypr/scripts/hypridle.sh toggle"
+  },
+
+  "tray": {
+    "icon-size": 21,
+    "spacing": 10
+  },
+
+  "clock": {
+    "format": "{:%H:%M %a}",
+    "timezone": "",
+    "tooltip": false
+  },
+
+  "custom/system": {
+    "format": "",
+    "tooltip": false
+  },
+
+  "cpu": {
+    "format": "/ C {usage}% ",
+    "on-click": "kitty --class dotfiles-floating -e btop"
+  },
+
+  "memory": {
+    "format": "/ M {}% ",
+    "on-click": "kitty --class dotfiles-floating -e btop"
+  },
+
+  "disk": {
+    "interval": 30,
+    "format": "D {percentage_used}% ",
+    "path": "/",
+    "on-click": "kitty --class dotfiles-floating -e btop"
+  },
+
+  "hyprland/language": {
+    "format": "/ K {short}"
+  },
+
+  "group/hardware": {
+    "orientation": "inherit",
+    "drawer": {
+      "transition-duration": 300,
+      "children-class": "not-memory",
+      "transition-left-to-right": false
+    },
+    "modules": ["custom/system", "disk", "cpu", "memory", "hyprland/language"]
+  },
+
+  "group/tools": {
+    "orientation": "inherit",
+    "drawer": {
+      "transition-duration": 300,
+      "children-class": "not-memory",
+      "transition-left-to-right": false
+    },
+    "modules": ["custom/tools", "custom/cliphist", "custom/hypridle", "custom/hyprshade"]
+  },
+
+  "group/links": {
+    "orientation": "horizontal",
+    "modules": ["custom/chatgpt", "custom/empty"]
+  },
+
+  "network": {
+    "format": "{ifname}",
+    "format-wifi": " {essid} ({signalStrength}%)",
+    "format-ethernet": "  {ifname}",
+    "format-disconnected": "Disconnected ⚠",
+    "tooltip-format": " {ifname} via {gwaddri}",
+    "tooltip-format-wifi": "  {ifname} @ {essid}\nIP: {ipaddr}\nStrength: {signalStrength}%\nFreq: {frequency}MHz\nUp: {bandwidthUpBits} Down: {bandwidthDownBits}",
+    "tooltip-format-ethernet": " {ifname}\nIP: {ipaddr}\n up: {bandwidthUpBits} down: {bandwidthDownBits}",
+    "tooltip-format-disconnected": "Disconnected",
+    "max-length": 50,
+    "on-click": "kitty --class dotfiles-floating -e nmtui",
+    "on-click-right": "nm-connection-editor"
+  },
+
+  "battery": {
+    "states": {
+      "warning": 30,
+      "critical": 15
+    },
+    "format": "{icon} {capacity}%",
+    "format-charging": "  {capacity}%",
+    "format-plugged": "  {capacity}%",
+    "format-alt": "{icon}  {time}",
+    "format-icons": [" ", " ", " ", " ", " "]
+  },
+
+  "power-profiles-daemon": {
+    "format": "{icon}",
+    "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+    "tooltip": true,
+    "format-icons": {
+      "default": "",
+      "performance": "",
+      "balanced": "",
+      "power-saver": ""
+    }
+  },
+
+  "pulseaudio": {
+    "format": "{icon}  {volume}%",
+    "format-bluetooth": "{volume}% {icon} {format_source}",
+    "format-bluetooth-muted": " {icon} {format_source}",
+    "format-muted": " {format_source}",
+    "format-source": "{volume}% ",
+    "format-source-muted": "",
+    "format-icons": {
+      "headphone": " ",
+      "hands-free": " ",
+      "headset": " ",
+      "phone": " ",
+      "portable": " ",
+      "car": " ",
+      "default": ["", "", ""]
+    },
+    "on-click": "pavucontrol"
+  },
+
+  "bluetooth": {
+    "format": " {status}",
+    "format-disabled": "",
+    "format-off": "",
+    "interval": 30,
+    "on-click": "blueman-manager",
+    "format-no-controller": ""
+  }
+}

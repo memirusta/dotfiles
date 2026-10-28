@@ -1,0 +1,33 @@
+/* Hyprshade + duvar kağıdı efekt seçici — üst orta */
+
+@import "shared.rasi"
+
+window {
+    width:            25em;
+    x-offset:         0em;
+    y-offset:         2em;
+    spacing:          0em;
+    padding:          0em;
+    margin:           0px;
+    color:            #FFFFFF;
+    border:           @border-width;
+    border-color:     @color11;
+    cursor:           "default";
+    transparency:     "real";
+    location:         north;
+    anchor:           north;
+    fullscreen:       false;
+    enabled:          true;
+    border-radius:    @border-radius;
+    background-color: transparent;
+}
+
+mainbox {
+    enabled:          true;
+    spacing:          0em;
+    padding:          0em;
+    orientation:      horizontal;
+    children:         [ "listbox" ];
+    background-color: transparent;
+    background-image: @current-image;
+}

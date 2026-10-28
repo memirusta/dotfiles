@@ -1,0 +1,61 @@
+-- Windows-like compositor title bars using hyprbars.
+
+hl.plugin.load("/home/memir/.local/lib/hyprland-plugins/hyprbars.so")
+
+hl.config({
+    plugin = {
+        hyprbars = {
+            enabled = true,
+
+            bar_height = 38,
+            bar_color = "rgba(20202aff)",
+
+            bar_title_enabled = true,
+            bar_text_size = 12,
+            bar_text_weight = "medium",
+            bar_text_font = "Sans",
+            bar_text_align = "left",
+
+            bar_buttons_alignment = "right",
+
+            bar_padding = 12,
+            bar_button_padding = 12,
+
+            bar_part_of_window = true,
+            bar_precedence_over_border = true,
+
+            icon_on_hover = false,
+
+            -- Windows: title bar'a çift tıklayınca maximize / restore.
+            on_double_click = [[bash -lc "$HOME/.config/hypr/scripts/windows-maximize.sh"]],
+        },
+    },
+})
+
+-- Sağdan sola sıralanırlar
+-- Close
+hl.plugin.hyprbars.add_button({
+    bg_color = "rgb(c42b1c)",
+    fg_color = "rgb(ffffff)",
+    size = 20,
+    icon = "X",
+    action = [[hyprctl dispatch 'hl.dsp.window.close()']],
+})
+
+-- Maximize / restore
+hl.plugin.hyprbars.add_button({
+    bg_color = "rgb(20202a)",
+    fg_color = "rgb(ffffff)",
+    size = 20,
+    icon = "□",
+    action = [[bash -lc "$HOME/.config/hypr/scripts/windows-maximize.sh"]],
+})
+
+-- Minimize
+hl.plugin.hyprbars.add_button({
+    bg_color = "rgb(20202a)",
+    fg_color = "rgb(ffffff)",
+    size = 20,
+    icon = "—",
+    action = [[hyprctl dispatch 'hl.dsp.window.move({ workspace = "special:minimized", follow = false })']],
+})
