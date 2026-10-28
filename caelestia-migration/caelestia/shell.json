@@ -1,0 +1,183 @@
+{
+    "appearance": {
+        "transparency": {
+            "enabled": true,
+            "base": 0.8,
+            "layers": 0.4
+        }
+    },
+    "general": {
+        "apps": {
+            "terminal": [
+                "kitty"
+            ],
+            "audio": [
+                "pavucontrol"
+            ],
+            "playback": [
+                "mpv"
+            ],
+            "explorer": [
+                "dolphin"
+            ]
+        },
+        "idle": {
+            "lockBeforeSleep": true,
+            "inhibitWhenAudio": true,
+            "timeouts": [
+                {
+                    "timeout": 480,
+                    "idleAction": [
+                        "brightnessctl",
+                        "-s",
+                        "set",
+                        "10"
+                    ],
+                    "returnAction": [
+                        "brightnessctl",
+                        "-r"
+                    ]
+                },
+                {
+                    "timeout": 600,
+                    "idleAction": "lock"
+                },
+                {
+                    "timeout": 660,
+                    "idleAction": "dpms off",
+                    "returnAction": "dpms on"
+                },
+                {
+                    "timeout": 1800,
+                    "idleAction": [
+                        "systemctl",
+                        "suspend"
+                    ]
+                }
+            ]
+        }
+    },
+    "background": {
+        "enabled": false
+    },
+    "bar": {
+        "persistent": true,
+        "workspaces": {
+            "shown": 4,
+            "showWindows": true,
+            "specialWorkspaceIcons": [
+                {
+                    "name": "minimized",
+                    "icon": "minimize"
+                },
+                {
+                    "name": "special",
+                    "icon": "star"
+                }
+            ]
+        },
+        "clock": {
+            "showDate": true
+        },
+        "statusIcons": [
+            {
+                "id": "lockStatus",
+                "enabled": true
+            },
+            {
+                "id": "audio",
+                "enabled": true
+            },
+            {
+                "id": "microphone",
+                "enabled": false
+            },
+            {
+                "id": "network",
+                "enabled": true
+            },
+            {
+                "id": "bluetooth",
+                "enabled": true
+            },
+            {
+                "id": "battery",
+                "enabled": true
+            },
+            {
+                "id": "kbLayout",
+                "enabled": true
+            }
+        ],
+        "entries": [
+            {
+                "id": "logo",
+                "enabled": true
+            },
+            {
+                "id": "pinnedApps",
+                "enabled": true
+            },
+            {
+                "id": "display",
+                "enabled": true
+            },
+            {
+                "id": "spacer",
+                "enabled": true
+            },
+            {
+                "id": "workspaces",
+                "enabled": true
+            },
+            {
+                "id": "spacer",
+                "enabled": true
+            },
+            {
+                "id": "updates",
+                "enabled": true
+            },
+            {
+                "id": "statusIcons",
+                "enabled": true
+            },
+            {
+                "id": "hardware",
+                "enabled": true
+            },
+            {
+                "id": "tray",
+                "enabled": true
+            },
+            {
+                "id": "power",
+                "enabled": true
+            },
+            {
+                "id": "clock",
+                "enabled": true
+            }
+        ]
+    },
+    "launcher": {
+        "favouriteApps": [
+            "google-chrome",
+            "spotify",
+            "code-oss",
+            "com.system76.CosmicFiles"
+        ]
+    },
+    "lock": {
+        "enableFprint": false,
+        "enableHowdy": false
+    },
+    "services": {
+        "weatherLocation": "Ankara",
+        "defaultPlayer": "Spotify",
+        "smartScheme": false
+    },
+    "paths": {
+        "wallpaperDir": "~/wallpaper"
+    }
+}

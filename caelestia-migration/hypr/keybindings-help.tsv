@@ -1,0 +1,57 @@
+SUPER + Enter	Terminal — Kitty
+SUPER + B	Google Chrome
+SUPER + E	Dolphin dosya yöneticisi
+SUPER + Ctrl + E	Emoji seçici
+SUPER + Ctrl + C	Hesap makinesi
+SUPER + Q	Aktif pencereyi kapat
+SUPER + Shift + Q	Aktif pencereyi zorla kapat
+SUPER + F	Tam ekran
+SUPER + M	Maksimize / geri al (Aero Snap)
+SUPER + T	Yüzen pencereyi aç/kapat
+SUPER + Shift + T	Windows yüzen mod / Hyprland döşeme modu
+SUPER + P	Pseudotile
+SUPER + Oklar	Pencereyi yasla: yarım / çeyrek / maksimize / geri al (aşağı: küçült)
+SUPER + Fare Sol	Pencereyi taşı
+SUPER + Fare Sağ	Pencereyi boyutlandır
+SUPER + Shift + Sol/Sağ	Pencereyi diğer monitöre taşı (yaslanmış halde)
+SUPER + G	Pencere grubunu aç/kapat
+SUPER + Alt + Oklar	Odağı taşı
+Alt + Tab	Pencere değiştirici (snappy-switcher, MRU)
+SUPER + D	Masaüstünü göster (tekrar: geri getir)
+SUPER + Shift + M	Küçültülmüş pencereleri geri getir
+SUPER + Alt + Shift + Oklar	Pencereyi 100 px boyutlandır
+SUPER + Ctrl + Shift + Oklar	Döşeme modunda pencereleri yer değiştir
+Pencereyi kenara sürükle	Kenar: yarım ekran · Köşe: çeyrek · Üst: maksimize
+SUPER + Ctrl + R	Hyprland config reload
+SUPER + Shift + A	Animasyonları aç/kapat
+SUPER + Print / Shift + S	Ekran görüntüsü
+SUPER + Ctrl + Q	Güç menüsü
+SUPER + Shift + V	Duvar kağıdını aç/kapat
+SUPER + Shift + W	Rastgele duvar kağıdı
+SUPER + Ctrl + W	Waypaper
+SUPER + Alt + W	Duvar kağıdı otomasyonu
+SUPER + Ctrl + Enter	Uygulama başlatıcı (Caelestia)
+SUPER + Ctrl + K	Bu kısayol listesi
+SUPER + Shift + B	Caelestia shell'i yeniden başlat
+SUPER + Ctrl + B	Dashboard (medya, hava, performans)
+SUPER + Shift + R	Config reload scripti
+SUPER + V	Pano geçmişi (Vicinae)
+SUPER + Shift + H	Hyprshade
+SUPER + I	Ayarlar
+SUPER + Ctrl + G	GPU değiştir
+SUPER + Ctrl + M	Monitör düzenini zorla uygula
+SUPER + Alt + M	Monitör düzenini düzelt
+SUPER + Space	Klavye düzenini değiştir
+SUPER + Ctrl + L	Ekranı kilitle
+SUPER + 1…0	Çalışma alanına geç
+SUPER + Shift + 1…0	Pencereyi çalışma alanına taşı ve takip et
+SUPER + Ctrl + 1…0	Mevcut alandaki tüm pencereleri hedef alana taşı
+SUPER + Tab	Sonraki monitör çalışma alanı
+SUPER + Shift + Tab	Önceki monitör çalışma alanı
+SUPER + Fare Tekerleği	Çalışma alanları arasında gezin
+SUPER + Ctrl + Aşağı	Boş çalışma alanına geç
+SUPER + Alt + Enter	Acil durum terminali
+SUPER + Alt + Q	Acil durum pencere kapatma
+SUPER + Alt + R	Acil durum config reload
+SUPER + A	Hızlı ayarlar (WiFi, BT, mikrofon, oyun modu)
+SUPER + N	Bildirim paneli

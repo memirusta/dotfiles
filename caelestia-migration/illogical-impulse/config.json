@@ -1,0 +1,28 @@
+{
+    "panelFamily": "ii",
+    "appearance": {
+        "fonts": {
+            "main": "Rubik",
+            "numbers": "Rubik",
+            "title": "Rubik",
+            "iconNerd": "CaskaydiaCove NF",
+            "monospace": "CaskaydiaCove NF",
+            "reading": "Rubik",
+            "expressive": "Rubik"
+        }
+    },
+    "background": {
+        "wallpaperPath": "@HOME@/.config/hypr/cache/emir-transparent.mp4",
+        "thumbnailPath": "",
+        "wallpaperAnimation": "",
+        "showBlur": false,
+        "hideWhenFullscreen": true,
+        "parallax": {
+            "enableWorkspace": false
+        },
+        "widgets": {
+            "clock": { "enable": true },
+            "media": { "enable": true }
+        }
+    }
+}

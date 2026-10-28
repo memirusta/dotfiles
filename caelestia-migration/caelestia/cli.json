@@ -1,0 +1,20 @@
+{
+    "theme": {
+        "enableTerm": false,
+        "enableHypr": false,
+        "enableGtk": false,
+        "enableQt": false,
+        "enableChromium": false,
+        "enableDiscord": false,
+        "enableSpicetify": false,
+        "enablePandora": false,
+        "enableWarp": false,
+        "enableZed": false,
+        "enableFuzzel": true,
+        "enableBtop": true,
+        "postHook": "$HOME/.config/hypr/scripts/caelestia-theme-hook.sh"
+    },
+    "wallpaper": {
+        "postHook": "[ -n \"$EMIR_WALLPAPER_SH\" ] || EMIR_FROM_CAELESTIA=1 \"$HOME/.config/hypr/scripts/wallpaper.sh\" \"$WALLPAPER_PATH\""
+    }
+}
