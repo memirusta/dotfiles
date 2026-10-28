@@ -158,7 +158,14 @@
                 "id": "clock",
                 "enabled": true
             }
-        ]
+        ],
+        "tray": {
+            "hiddenIcons": [
+                "nm-applet",
+                "nm-tray",
+                "NetworkManager"
+            ]
+        }
     },
     "launcher": {
         "favouriteApps": [
@@ -175,7 +182,8 @@
     "services": {
         "weatherLocation": "Ankara",
         "defaultPlayer": "Spotify",
-        "smartScheme": false
+        "smartScheme": false,
+        "clockFormat": "TwentyFourHour"
     },
     "paths": {
         "wallpaperDir": "~/wallpaper"
