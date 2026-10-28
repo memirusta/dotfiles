@@ -25,5 +25,6 @@ if [ -d "$BACKUP/state/quickshell" ]; then
 fi
 
 hyprctl reload >/dev/null || true
+rm -f "$HOME/.config-backups/caelestia-migration-latest"
 command -v noctalia >/dev/null && (noctalia --daemon &>/dev/null & disown)
 echo ":: Tamam. Caelestia'nın derlenmiş eklentisi /usr/lib/qt6/qml/Caelestia altında duruyor, zararsız."

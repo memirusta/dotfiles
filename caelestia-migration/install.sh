@@ -5,6 +5,7 @@
 #
 #   ./install.sh            kur
 #   FORCE=1 ./install.sh    canlı hypr dosyaların repodakinden farklıysa bile üzerine yaz
+#   SKIP_BUILD=1 ./install.sh  paket kurulumu + Caelestia derlemesini atla (yarıda kalan kurulumu sürdürmek için)
 #   ./rollback.sh           her şeyi geri al
 set -euo pipefail
 
@@ -49,9 +50,11 @@ for d in hypr caelestia quickshell snappy-switcher illogical-impulse; do
     [ -e "$CFG/$d" ] && cp -aL "$CFG/$d" "$BACKUP/"
 done
 [ -d "$STATE/quickshell" ] && mkdir -p "$BACKUP/state" && cp -aL "$STATE/quickshell" "$BACKUP/state/"
-echo "$BACKUP" >"$BACKUP_ROOT/caelestia-migration-latest"
+# Geri dönüş noktası = ilk kurulumdan önceki hal. Tekrar çalıştırmalarda (zaten geçirilmiş config'in yedeği) ezilmesin.
+[ -s "$BACKUP_ROOT/caelestia-migration-latest" ] || echo "$BACKUP" >"$BACKUP_ROOT/caelestia-migration-latest"
 
 # ── 2. Paketler ───────────────────────────────────────────────────────────────
+if [ "${SKIP_BUILD:-0}" != 1 ]; then
 say "Paketler"
 if pacman -Qq quickshell >/dev/null 2>&1; then
     warn "quickshell (stable) kurulu; Caelestia quickshell-git istiyor. yay değiştirmeyi sorarsa 'y' de."
@@ -76,7 +79,7 @@ yay -S --needed "${PKGS[@]}"
 
 # ── 3. Caelestia shell (sabit commit + Emir bar patch'i) ───────────────────────
 say "Caelestia shell derleniyor ($CAELESTIA_REV)"
-mkdir -p "$SRC"
+mkdir -p "$SRC" "$CFG/quickshell"
 [ -d "$SRC/caelestia-shell/.git" ] || git clone https://github.com/caelestia-dots/shell.git "$SRC/caelestia-shell"
 cd "$SRC/caelestia-shell"
 git fetch --tags origin
@@ -90,8 +93,12 @@ cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/ \
     -DINSTALL_QSCONFDIR="$CFG/quickshell/caelestia"
 cmake --build build
 sudo cmake --install build
-sudo chown -R "$USER:" "$CFG/quickshell/caelestia"
 cd "$HERE"
+fi # SKIP_BUILD
+
+# sudo cmake --install ~/.config/quickshell'i root olarak oluşturabiliyor: sahipliği geri al
+sudo chown "$USER:" "$CFG/quickshell"
+sudo chown -R "$USER:" "$CFG/quickshell/caelestia"
 
 # ── 4. Caelestia ayarları ─────────────────────────────────────────────────────
 say "Caelestia ayarları"
