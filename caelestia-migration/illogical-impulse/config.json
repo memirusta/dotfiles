@@ -21,8 +21,36 @@
             "enableWorkspace": false
         },
         "widgets": {
-            "clock": { "enable": true },
-            "media": { "enable": true }
+            "clock": {
+                "enable": true
+            },
+            "weather": {
+                "enable": true,
+                "placementStrategy": "leastBusy"
+            },
+            "calendar": {
+                "enable": true,
+                "placementStrategy": "leastBusy"
+            },
+            "media": {
+                "enable": true,
+                "placementStrategy": "leastBusy"
+            },
+            "resources": {
+                "enable": true,
+                "placementStrategy": "leastBusy"
+            },
+            "todo": {
+                "enable": true,
+                "placementStrategy": "leastBusy"
+            }
+        }
+    },
+    "bar": {
+        "weather": {
+            "enable": true,
+            "enableGPS": false,
+            "city": "Ankara"
         }
     }
 }
