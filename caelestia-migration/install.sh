@@ -182,9 +182,10 @@ sleep 0.5
 caelestia shell -d
 sleep 1
 qs -n -d -p "$CFG/quickshell/end4-pC/emir-widgets.qml"
-pgrep -f polkit-gnome-authentication-agent-1 >/dev/null || (/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &>/dev/null & disown)
-pgrep -x vicinae >/dev/null || (vicinae server &>/dev/null & disown)
-pgrep -x snappy-switcher >/dev/null || (snappy-switcher --daemon &>/dev/null & disown)
+# setsid -f: script ve terminal kapansa da yaşasınlar (bir sonraki girişte autostart.lua başlatıyor)
+pgrep -f polkit-gnome-authentication-agent-1 >/dev/null || setsid -f /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &>/dev/null
+pgrep -f "vicinae server" >/dev/null || setsid -f vicinae server &>/dev/null
+pgrep -x snappy-switcher >/dev/null || setsid -f snappy-switcher --daemon &>/dev/null
 hyprctl reload >/dev/null
 
 say "Bitti. Yedek: $BACKUP — geri almak için: $HERE/rollback.sh"
