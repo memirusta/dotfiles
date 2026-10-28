@@ -1,0 +1,17 @@
+[shell.panel]
+transparency_mode = "glass"
+borders = true
+shadow = true
+list_item_background = true
+
+launcher_placement = "floating"
+launcher_position = "center"
+floating_offset = 10
+
+[shell.launcher]
+show_icons = true
+compact = false
+app_grid = true
+sort_by_usage = true
+fetch_exchange_rates = false
+provider_prefix = "/"

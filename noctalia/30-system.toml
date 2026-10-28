@@ -1,0 +1,53 @@
+# System-level behaviour handed over from hypridle / hyprlock / swaync / polkit-gnome / cliphist.
+
+[theme]
+mode             = "dark"
+source           = "wallpaper"      # palette follows the (video/image) wallpaper frame
+wallpaper_scheme = "m3-content"
+
+[shell]
+polkit_agent      = true            # replaces polkit-gnome-authentication-agent
+clipboard_enabled = true            # replaces cliphist + rofi clipboard menu
+clipboard_history_max_entries = 200
+
+[notification]
+enable_daemon = true                # replaces swaync / dunst
+position      = "top_right"
+
+# Idle chain ported 1:1 from hypridle.conf (8 / 10 / 11 / 30 minutes).
+[idle]
+behavior_order          = ["dim", "lock", "screen-off", "suspend"]
+pre_action_fade_seconds = 0
+
+[idle.behavior.dim]
+enabled        = true
+timeout        = 480
+action         = "command"
+command        = "brightnessctl -s set 10"
+resume_command = "brightnessctl -r"
+
+[idle.behavior.lock]
+enabled = true
+timeout = 600
+action  = "lock"
+
+[idle.behavior.screen-off]
+enabled = true
+timeout = 660
+action  = "screen_off"
+
+[idle.behavior.suspend]
+enabled = true
+timeout = 1800
+action  = "lock_and_suspend"
+
+# Alt+Tab (replaces hyprshell, whose binary no longer starts after the Hyprland/library update).
+# Bound in hypr/lua/keybindings.lua: ALT+Tab -> "noctalia msg window-switcher hold".
+[shell.window_switcher]
+style                  = "compact"   # "compact" = Windows-like strip, "carousel" = freestanding depth layout
+mru                    = true        # most-recently-used order, like Windows
+show_caption           = true
+show_count             = true
+show_app_icon          = true
+show_all_outputs       = true        # windows from every monitor
+current_workspace_only = false

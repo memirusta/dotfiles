@@ -1,0 +1,186 @@
+# Windows-style bottom taskbar — ported from the old Waybar setup (2026-10-12).
+# Same layout on every monitor; Noctalia handles per-monitor scaling natively,
+# so the old edp-compensate.css hack is no longer needed.
+
+[bar]
+order = ["main"]
+
+[bar.default]
+enabled            = true
+position           = "bottom"
+layer              = "top"
+reserve_space      = true
+thickness          = 46
+background_opacity = 0.55
+compositor_blur    = true
+shadow             = false
+radius             = 0
+margin_ends        = 0
+margin_edge        = 0
+padding            = 12
+widget_spacing     = 8
+font_family        = "Segoe UI Variable"
+font_weight        = 500
+hover_highlight    = true
+capsule            = false
+
+# Left: Start, pinned apps, display controls. Centre: workspaces. Right: status area, tray, power, clock.
+# active_window (title of the focused window) is switched off; re-add "active_window"
+# after "taskbar" to bring it back (its [widget.active_window] settings below are kept).
+start  = ["launcher", "taskbar", "group:display"]
+center = ["workspaces"]
+end    = [
+  "updates", "volume", "network", "bluetooth", "battery", "power_profile",
+  "group:hardware", "clipboard", "control-center", "keyboard_layout",
+  "tray", "session", "clock",
+]
+
+# Dead-zone (empty bar space) behaves like the Start button / power menu.
+[bar.default.dead_zone.actions]
+left  = "panel-toggle launcher"
+right = "panel-toggle control-center"
+
+# ── Widgets ──────────────────────────────────────────────────────────────────
+
+[widget.launcher]
+custom_image          = "/home/memir/.config/noctalia/assets/arch-linux.svg"
+custom_image_colorize = true
+scale                 = 1.3
+
+[widget.launcher.actions]
+left  = "panel-toggle launcher"
+right = "panel-toggle session"
+
+[widget.taskbar]
+pinned      = ["google-chrome", "spotify", "code-oss", "com.system76.CosmicFiles"]
+pinned_opacity = 0.7
+icon_scale  = 1.45
+item_spacing = 8
+show_all_outputs = false
+show_active_indicator = true
+
+[widget.active_window]
+min_length   = 60
+max_length   = 420
+icon_size    = 20
+title_scroll = "on_hover"
+display      = "icon_and_text"
+
+[widget.workspaces]
+style       = "regular"
+show_labels = true
+label_source = "id"
+active_pill_size = 2.4
+pill_scale  = 0.8
+focused_color  = "primary"
+occupied_color = "secondary"
+empty_color    = "surface_variant"
+
+[widget.clock]
+format         = "{:%H:%M %a}"
+tooltip_format = "{:%A, %d %B %Y}"
+
+[widget.tray]
+hidden = ["nm-applet", "nm-tray", "NetworkManager", "org.freedesktop.network-manager-applet"]
+hide_passive = true
+
+[widget.battery]
+display_mode  = "glyph"
+show_label    = true
+label_content = "percent"
+
+[widget.network]
+show_label = true
+
+[widget.bluetooth]
+show_label = false
+hide_when_adapter_off = true
+
+[widget.volume]
+device     = "output"
+show_label = true
+
+[widget.volume.actions]
+right = "exec pavucontrol"
+
+[widget.keyboard_layout]
+show_glyph = false
+show_label = true
+display    = "short"
+
+[widget.keyboard_layout.actions]
+left = "exec ~/.config/hypr/scripts/keyboard-layout.sh"
+
+[widget.session]
+glyph = "power"
+
+# ── Live status widgets: provided by the local plugin emir/status ────────────
+#    (~/.local/share/noctalia/plugins/status; scripts in ~/.config/hypr/scripts/status)
+
+[widget.updates]
+type = "emir/status:updates"
+
+[widget.updates.actions]
+left  = "exec sh -c '~/.config/hypr/scripts/install-updates.sh; noctalia msg plugin emir/status:updates all refresh'"
+right = "exec sh -c 'kitty -e yay; noctalia msg plugin emir/status:updates all refresh'"
+
+[widget.wallpaper_toggle]
+type  = "emir/status:wallpaper"
+scale = 1.2
+
+[widget.wallpaper_toggle.actions]
+left = "exec ~/.config/hypr/scripts/wallpaper-toggle.sh"
+
+[widget.hz]
+type  = "emir/status:hz"
+scale = 1.2
+
+[widget.hz.actions]
+left  = "exec ~/.config/hypr/scripts/refresh-rate.sh toggle"
+right = "exec ~/.config/hypr/scripts/refresh-rate.sh menu"
+
+[widget.gpu]
+type  = "emir/status:gpu"
+scale = 1.2
+
+[widget.gpu.actions]
+left = "exec ~/.config/hypr/scripts/gpu-switch.sh"
+
+# Hardware drawer: CPU / RAM / disk collapse into one capsule and unfold on hover.
+[widget.cpu]
+type = "sysmon"
+stat = "cpu_usage"
+
+[widget.ram]
+type = "sysmon"
+stat = "ram_pct"
+
+[widget.disk]
+type = "sysmon"
+stat = "disk_used_pct"
+path = "/"
+
+[widget.cpu.actions]
+left = "exec kitty --class dotfiles-floating -e btop"
+
+[widget.ram.actions]
+left = "exec kitty --class dotfiles-floating -e btop"
+
+[widget.disk.actions]
+left = "exec kitty --class dotfiles-floating -e btop"
+
+[[bar.default.capsule_group]]
+id      = "display"
+members = ["wallpaper_toggle", "hz", "gpu"]
+fill    = "surface_variant"
+opacity = 0.6
+padding = 4.0
+
+[[bar.default.capsule_group]]
+id        = "hardware"
+members   = ["cpu", "ram", "disk"]
+fill      = "surface_variant"
+opacity   = 0.6
+padding   = 4.0
+accordion = true
+accordion_direction = "start"
