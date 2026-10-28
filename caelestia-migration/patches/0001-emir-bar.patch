@@ -1,18 +1,18 @@
-From dcfda0848c7b20cf767128b1d806429f41520c33 Mon Sep 17 00:00:00 2001
+From ca298f1078b937b66b4de1a4bd01c916ecf5e6f0 Mon Sep 17 00:00:00 2001
 From: memirusta <memirusta@users.noreply.github.com>
 Date: Wed, 28 Oct 2026 18:01:24 +0300
 Subject: [PATCH] emir: custom bar entries (pinnedApps, display, updates,
  hardware)
 
 ---
- modules/bar/Bar.qml                          |  26 +++++
- modules/bar/components/emir/DisplayGroup.qml |  71 ++++++++++++
+ modules/bar/Bar.qml                          |  30 +++++
+ modules/bar/components/emir/DisplayGroup.qml |  74 ++++++++++++
  modules/bar/components/emir/EmirButton.qml   |  68 +++++++++++
  modules/bar/components/emir/EmirScript.qml   |  94 +++++++++++++++
  modules/bar/components/emir/Hardware.qml     | 107 +++++++++++++++++
- modules/bar/components/emir/PinnedApps.qml   | 115 +++++++++++++++++++
- modules/bar/components/emir/Updates.qml      |  35 ++++++
- 7 files changed, 516 insertions(+)
+ modules/bar/components/emir/PinnedApps.qml   | 120 +++++++++++++++++++
+ modules/bar/components/emir/Updates.qml      |  36 ++++++
+ 7 files changed, 529 insertions(+)
  create mode 100644 modules/bar/components/emir/DisplayGroup.qml
  create mode 100644 modules/bar/components/emir/EmirButton.qml
  create mode 100644 modules/bar/components/emir/EmirScript.qml
@@ -21,7 +21,7 @@ Subject: [PATCH] emir: custom bar entries (pinnedApps, display, updates,
  create mode 100644 modules/bar/components/emir/Updates.qml
 
 diff --git a/modules/bar/Bar.qml b/modules/bar/Bar.qml
-index 3399f1d..c6cc7ed 100644
+index 3399f1d..3e60fb8 100644
 --- a/modules/bar/Bar.qml
 +++ b/modules/bar/Bar.qml
 @@ -2,6 +2,7 @@ pragma ComponentBehavior: Bound
@@ -32,7 +32,7 @@ index 3399f1d..c6cc7ed 100644
  import QtQuick
  import QtQuick.Layouts
  import Quickshell
-@@ -171,6 +172,31 @@ ColumnLayout {
+@@ -171,6 +172,35 @@ ColumnLayout {
                      }
                  }
              }
@@ -46,13 +46,17 @@ index 3399f1d..c6cc7ed 100644
 +            DelegateChoice {
 +                roleValue: "display"
 +                delegate: EntryWrapper {
-+                    DisplayGroup {}
++                    DisplayGroup {
++                        compact: root.screen.height < 1000
++                    }
 +                }
 +            }
 +            DelegateChoice {
 +                roleValue: "updates"
 +                delegate: EntryWrapper {
-+                    Updates {}
++                    Updates {
++                        compact: root.screen.height < 1000
++                    }
 +                }
 +            }
 +            DelegateChoice {
@@ -66,10 +70,10 @@ index 3399f1d..c6cc7ed 100644
                  delegate: EntryWrapper {
 diff --git a/modules/bar/components/emir/DisplayGroup.qml b/modules/bar/components/emir/DisplayGroup.qml
 new file mode 100644
-index 0000000..270859d
+index 0000000..fc8a2d3
 --- /dev/null
 +++ b/modules/bar/components/emir/DisplayGroup.qml
-@@ -0,0 +1,71 @@
+@@ -0,0 +1,74 @@
 +import QtQuick
 +import QtQuick.Layouts
 +import Caelestia.Config
@@ -79,6 +83,9 @@ index 0000000..270859d
 +// Emir: wallpaper on/off, laptop panel Hz, GPU mode — the old "display" capsule.
 +StyledRect {
 +    id: root
++
++    // Short screens (laptop at 150%): Hz and GPU show only their value, no icon
++    property bool compact
 +
 +    color: Colours.tPalette.m3surfaceContainer
 +    radius: Tokens.rounding.full
@@ -123,7 +130,7 @@ index 0000000..270859d
 +        }
 +
 +        EmirButton {
-+            icon: "speed"
++            icon: root.compact ? "" : "speed"
 +            label: hz.ok ? hz.value.replace(/hz$/i, "") : "…"
 +            colour: hz.cls === "hz-60" ? Colours.palette.m3onSurfaceVariant : Colours.palette.m3secondary
 +            onLeftClicked: hz.run(`${hz.scriptsDir}/refresh-rate.sh toggle`)
@@ -134,7 +141,7 @@ index 0000000..270859d
 +            // "󰢮 NV" -> "NV"
 +            readonly property string mode: gpu.ok ? gpu.value.split(/\s+/).pop() : "…"
 +
-+            icon: "developer_board"
++            icon: root.compact ? "" : "developer_board"
 +            label: mode === "iGPU" ? "iG" : mode
 +            colour: gpu.cls === "gpu-nvidia" ? Colours.palette.m3tertiary : Colours.palette.m3secondary
 +            onLeftClicked: gpu.run(`${gpu.scriptsDir}/gpu-switch.sh`)
@@ -430,10 +437,10 @@ index 0000000..2d5aaee
 +}
 diff --git a/modules/bar/components/emir/PinnedApps.qml b/modules/bar/components/emir/PinnedApps.qml
 new file mode 100644
-index 0000000..6932709
+index 0000000..ef92433
 --- /dev/null
 +++ b/modules/bar/components/emir/PinnedApps.qml
-@@ -0,0 +1,115 @@
+@@ -0,0 +1,120 @@
 +pragma ComponentBehavior: Bound
 +
 +import QtQuick
@@ -479,7 +486,12 @@ index 0000000..6932709
 +
 +            required property string modelData
 +
-+            readonly property DesktopEntry entry: DesktopEntries.heuristicLookup(modelData)
++            // Touch applications.values so this re-evaluates once the desktop entry list has loaded
++            // (at shell start it is still empty, so a plain lookup returns null forever)
++            readonly property DesktopEntry entry: {
++                DesktopEntries.applications.values;
++                return DesktopEntries.heuristicLookup(modelData);
++            }
 +            readonly property list<string> classes: [modelData, entry?.id ?? "", entry?.startupClass ?? ""].filter(c => c.length > 0).map(c => c.toLowerCase())
 +            readonly property list<HyprlandToplevel> windows: Hypr.toplevels.values.filter(t => classes.includes((t.lastIpcObject?.class ?? "").toLowerCase()))
 +            readonly property bool running: windows.length > 0
@@ -510,7 +522,7 @@ index 0000000..6932709
 +
 +            Layout.alignment: Qt.AlignHCenter
 +            implicitWidth: Tokens.sizes.bar.innerWidth
-+            implicitHeight: Tokens.sizes.bar.innerWidth - Tokens.padding.extraSmall
++            implicitHeight: Math.round(Tokens.sizes.bar.innerWidth * 0.8)
 +            visible: !!entry
 +
 +            StateLayer {
@@ -551,10 +563,10 @@ index 0000000..6932709
 +}
 diff --git a/modules/bar/components/emir/Updates.qml b/modules/bar/components/emir/Updates.qml
 new file mode 100644
-index 0000000..8b396ab
+index 0000000..e4744fb
 --- /dev/null
 +++ b/modules/bar/components/emir/Updates.qml
-@@ -0,0 +1,35 @@
+@@ -0,0 +1,36 @@
 +import QtQuick
 +import Caelestia.Config
 +import qs.components
@@ -566,8 +578,9 @@ index 0000000..8b396ab
 +    id: root
 +
 +    readonly property int count: parseInt(status.value) || 0
++    property bool compact
 +
-+    icon: count > 0 ? "system_update_alt" : "check_circle"
++    icon: count > 0 ? (compact ? "" : "system_update_alt") : "check_circle"
 +    label: count > 0 ? (count > 99 ? "99+" : String(count)) : ""
 +    iconFill: count > 0 ? 1 : 0
 +    dim: count === 0

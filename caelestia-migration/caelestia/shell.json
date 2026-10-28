@@ -82,7 +82,7 @@
         "statusIcons": [
             {
                 "id": "lockStatus",
-                "enabled": true
+                "enabled": false
             },
             {
                 "id": "audio",

@@ -97,7 +97,6 @@ if ! git -c user.name=emir -c user.email=emir@localhost am --3way "$HERE/patches
     git am --abort || true
     die "Bar patch'i uygulanamadı."
 fi
-rm -rf build
 cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/ \
     -DINSTALL_QSCONFDIR="$CFG/quickshell/caelestia"
 cmake --build build
@@ -114,6 +113,11 @@ say "Caelestia ayarları"
 mkdir -p "$CFG/caelestia/templates"
 cp "$HERE/caelestia/shell.json" "$HERE/caelestia/cli.json" "$HERE/caelestia/emir.json" "$CFG/caelestia/"
 cp "$HERE/caelestia/templates/"* "$CFG/caelestia/templates/"
+# Laptop paneli (1920x1200 @ %150 = 800px mantıksal yükseklik) için sıkıştırılmış bar. Panel adı GPU moduna göre
+# eDP-1 ya da eDP-2 olabiliyor, ikisine de koyuyoruz.
+rm -rf "$CFG/caelestia/monitors/eDP-1" "$CFG/caelestia/monitors/eDP-2"
+mkdir -p "$CFG/caelestia/monitors"
+cp -r "$HERE/caelestia/monitors/"* "$CFG/caelestia/monitors/"
 
 # ── 5. Hyprland ───────────────────────────────────────────────────────────────
 say "Hyprland: keybind / autostart / windowrules / wallpaper.sh"
