@@ -29,11 +29,20 @@ command -v hyprctl >/dev/null || die "hyprctl bulunamadı."
 
 # ── 0. Canlı dosyalar repodakiyle aynı mı? ─────────────────────────────────────
 # Değiştirilen dosyalar repodaki halinden üretildi; o zamandan beri elle değiştirdiysen üzerine yazmayalım.
+# Bu paketin daha önceki bir sürümüyle aynıysa (önceki kurulum) de sorun yok.
+from_this_package() {
+    local f="$1" h
+    for h in $(git -C "$REPO" log --format=%H -- "caelestia-migration/hypr/$f" 2>/dev/null); do
+        git -C "$REPO" show "$h:caelestia-migration/hypr/$f" 2>/dev/null | cmp -s - "$CFG/hypr/$f" && return 0
+    done
+    return 1
+}
 changed=0
 for f in lua/keybindings.lua lua/autostart.lua lua/windowrules.lua lua/workspaces.lua scripts/wallpaper.sh \
     settings-app/hypr-settings.py keybindings-help.tsv; do
     # repodaki orijinal ya da zaten bu paketin hali (tekrar çalıştırma) ise sorun yok
-    if [ -f "$CFG/hypr/$f" ] && ! cmp -s "$CFG/hypr/$f" "$REPO/hypr/$f" && ! cmp -s "$CFG/hypr/$f" "$HERE/hypr/$f"; then
+    if [ -f "$CFG/hypr/$f" ] && ! cmp -s "$CFG/hypr/$f" "$REPO/hypr/$f" && ! cmp -s "$CFG/hypr/$f" "$HERE/hypr/$f" \
+        && ! from_this_package "$f"; then
         warn "~/.config/hypr/$f repodaki halinden farklı:"
         diff -u "$REPO/hypr/$f" "$CFG/hypr/$f" | head -20 || true
         changed=1
@@ -120,6 +129,8 @@ cp "$HERE/snappy-switcher/config.ini" "$CFG/snappy-switcher/config.ini"
 
 # ── 7. end4-pC (sadece masaüstü widget'ları) ──────────────────────────────────
 say "end4-pC masaüstü widget'ları"
+# pC'nin servis modülü bunların hepsini yüklüyor; biri eksikse hiçbir widget açılmıyor
+yay -S --needed qt6-5compat qt6-positioning qt6-multimedia kirigami syntax-highlighting
 if [ -d "$CFG/quickshell/end4-pC/.git" ]; then
     git -C "$CFG/quickshell/end4-pC" pull --ff-only || warn "end4-pC güncellenemedi, mevcut sürümle devam."
 else
@@ -147,7 +158,14 @@ say "Renk şeması"
 wall="$(cat "$CFG/hypr/cache/current_wallpaper" 2>/dev/null || true)"
 wall="${wall//\\ / }"
 if [ -n "$wall" ] && [ -f "$wall" ]; then
+    # caelestia-cli sadece resim kabul ediyor: videonun ilk frame'i (wallpaper.sh ile aynı dosya)
+    if [[ "$wall" =~ \.(mp4|webm|mkv|mov|gif|MP4|WEBM|MKV|GIF)$ ]]; then
+        frame="$CFG/hypr/cache/wallpaper-frame.jpg"
+        ffmpeg -y -loglevel error -i "$wall" -vframes 1 -q:v 2 "$frame" && wall="$frame"
+    fi
     EMIR_WALLPAPER_SH=1 caelestia wallpaper --no-smart -f "$wall" || warn "caelestia wallpaper başarısız"
+else
+    warn "Mevcut duvar kağıdı bulunamadı; renk şeması için bir kez duvar kağıdı değiştir."
 fi
 EMIR_WALLPAPER_SH=1 caelestia scheme set -n dynamic -m dark || warn "caelestia scheme başarısız"
 

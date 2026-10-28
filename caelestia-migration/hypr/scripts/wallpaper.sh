@@ -100,10 +100,11 @@ command -v walcord >/dev/null && walcord
 command -v pywalfox >/dev/null && pywalfox update
 
 # Caelestia (bar/launcher/notifications + end4-pC widgets + snappy) derives its scheme from this wallpaper.
-# Videos are fine: caelestia-cli takes their first frame itself. When this script was started BY caelestia
-# (launcher ">wallpaper" -> cli.json wallpaper.postHook), the scheme is already done, so skip it.
+# caelestia-cli (stable) only accepts images, so videos are handed over as their first frame ($color_source).
+# When this script was started BY caelestia (launcher ">wallpaper" -> cli.json wallpaper.postHook), the scheme is
+# already done, so skip it.
 if [ -z "${EMIR_FROM_CAELESTIA:-}" ] && command -v caelestia >/dev/null; then
-    EMIR_WALLPAPER_SH=1 caelestia wallpaper --no-smart -f "$used_wallpaper" >/dev/null 2>&1 || true
+    EMIR_WALLPAPER_SH=1 caelestia wallpaper --no-smart -f "$color_source" >/dev/null 2>&1 || true
 fi
 
 blur_cache="$generatedversions/blur-$blur-$effect-$wallpaperfilename.png"
